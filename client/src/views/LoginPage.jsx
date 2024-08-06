@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,26 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+
+  function openSpotifyLogin() {
+    try {
+        const width = 500;
+        const height = 600;
+        const left = window.screen.width / 2 - width / 2;
+        const top = window.screen.height / 2 - height / 2;
+      
+        window.open(
+          'http://localhost:3000/spotify-login',
+          'SpotifyLogin',
+          `width=${width},height=${height},top=${top},left=${left}`
+        );
+    } catch (error) {
+        console.log(error)
+    }
+    
+  }
+  
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -20,10 +40,9 @@ export default function LoginPage() {
 
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("premium", data.premium);
-    //   const response = await axios.get("http://localhost/spotify-login");
-    //   console.log(response)
+      window.location.href = 'http://localhost:3000/spotify-login'
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   }
 
@@ -53,6 +72,10 @@ export default function LoginPage() {
   function passwordOnChange(event) {
     setPassword(event.target.value);
   }
+
+  useEffect(() => {
+    openSpotifyLogin()
+  }, [])
 
   return (
     <>
