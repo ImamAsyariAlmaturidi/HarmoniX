@@ -1,0 +1,33 @@
+[
+    {
+      "firstName": "Imam",
+      "lastName": "Asyari",
+      "email": "imam@gmail.com",
+      "phone": "1234567890",
+      "premium": true,
+      "password": "imam",
+      "createdAt": "2024-08-05T00:00:00.000Z",
+      "updatedAt": "2024-08-05T00:00:00.000Z"
+    },
+    {
+      "firstName": "Athif",
+      "lastName": "Lanang",
+      "email": "athif@gmail.com",
+      "phone": "0987654321",
+      "premium": false,
+      "password": "athif",
+      "createdAt": "2024-08-05T00:00:00.000Z",
+      "updatedAt": "2024-08-05T00:00:00.000Z"
+    },
+    {
+      "firstName": "Alice",
+      "lastName": "Smith",
+      "email": "alice.smith@example.com",
+      "phone": "1122334455",
+      "premium": true,
+      "password": "password789",
+      "createdAt": "2024-08-05T00:00:00.000Z",
+      "updatedAt": "2024-08-05T00:00:00.000Z"
+    }
+  ]
+  
