@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+import Sidebar from "../components/Sidebar";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,20 +18,17 @@ export default function LoginPage() {
         addedData
       );
 
-      console.log(data);
       localStorage.setItem("access_token", data.access_token);
-      navigate("/dashboard");
+      localStorage.setItem("premium", data.premium);
+    //   const response = await axios.get("http://localhost/spotify-login");
+    //   console.log(response)
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: error.name,
-      });
+      console.log(error);
     }
   }
 
   async function googleLogin(codeResponse) {
     try {
-      console.log(codeResponse);
       const { data } = await axios.post(
         `http://localhost:3000/login/google`,
         null,
@@ -42,14 +39,10 @@ export default function LoginPage() {
         }
       );
       localStorage.setItem("access_token", data.access_token);
-      console.log(response);
-      navigate("/");
+      localStorage.setItem("premium", data.premium);
+      await axios.get("http://localhost/spotify-login");
     } catch (error) {
-      console.log(error, "error nih pak");
-      Swal.fire({
-        icon: "error",
-        title: error.response.data.message,
-      });
+      console.log(error);
     }
   }
 
@@ -63,31 +56,36 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="relative flex flex-col justify-center h-[85dvh] overflow-hidden bg-base-100">
-        <div className="w-full p-6 m-auto rounded-lg shadow-md lg:max-w-lg bg-base-200">
+      <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-black">
+        <div className="w-full p-6 m-auto rounded-lg lg:max-w-lg">
           <h1 className="text-3xl font-semibold text-center text-accent-focus">
-            Log In
+            Jutaan Lagu.
+          </h1>
+          <h1 className="text-3xl font-semibold text-center text-accent-focus">
+            Gratis di HarmoniX.
           </h1>
 
           <form className="space-y-4 mb-6" onSubmit={handleLogin}>
             <div>
               <label className="label">
-                <span className="text-base label-text">Username</span>
+                <span className="text-base label-text font-bold tracking-wide">
+                  Email
+                </span>
               </label>
               <input
                 type="text"
-                placeholder="Enter email"
                 className="w-full input input-bordered input-accent"
                 onChange={emailOnChange}
               />
             </div>
             <div>
               <label className="label">
-                <span className="text-base label-text">Password</span>
+                <span className="text-base label-text font-bold tracking-wide">
+                  Kata Sandi
+                </span>
               </label>
               <input
                 type="password"
-                placeholder="Enter Password"
                 className="w-full input input-bordered input-accent"
                 onChange={passwordOnChange}
               />
@@ -99,11 +97,14 @@ export default function LoginPage() {
             </div>
           </form>
           <div className="divider px-10">OR</div>
-          <div className="mt-6 flex justify-center items-center">
-            <GoogleLogin onSuccess={googleLogin} />
+          <div className="flex text-center justify-center">
+            <h1 className="text-center btn hover:btn-accent hover:text-white bg-white font-bold text-black">
+              Buat Akun?
+            </h1>
           </div>
         </div>
       </div>
+      <Sidebar />
     </>
   );
 }

@@ -1,5 +1,5 @@
 const generateUniqueOrderId = () => {
-    const timestamp = Date.now(); // Waktu saat ini dalam milidetik
+    const timestamp = Date.now();
     const prefix = 'ORDER';
     return `${prefix}_${timestamp}`;
 };

@@ -40,14 +40,20 @@ class Controller {
                 hooks: false
             })
 
+
+            const Users = await User.findOne({
+              where: {
+                email: payload.email
+              }
+            })
             const access_token = signToken({
                 id: user.id,
                 firstName: user.firstName,
             })
 
-            res.status(200).json({ access_token })
+            res.status(200).json({ access_token, premium: Users.premium })
         } catch (err) {
-           res.status(500).json(err)
+          console.log(err)
         }
     }
 
@@ -74,12 +80,15 @@ class Controller {
             premium: user.premium,
           };
           const access_token = signToken(payload)
-          res.status(200).json({
-            msg: "Login Succes",
-            access_token
-          })
+          const response = {
+            access_token,
+            premium: user.premium,
+            redirect_uri : '/spotify-login'
+          }
+          res.status(200).json(response)
         } catch (error) {
-          res.send(error)
+          console.log(error)
+
         }
       }
 }
