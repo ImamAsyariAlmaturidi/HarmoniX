@@ -1,33 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-
-
-  function openSpotifyLogin() {
-    try {
-        const width = 500;
-        const height = 600;
-        const left = window.screen.width / 2 - width / 2;
-        const top = window.screen.height / 2 - height / 2;
-      
-        window.open(
-          'http://localhost:3000/spotify-login',
-          'SpotifyLogin',
-          `width=${width},height=${height},top=${top},left=${left}`
-        );
-    } catch (error) {
-        console.log(error)
-    }
-    
-  }
-  
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -40,42 +20,13 @@ export default function LoginPage() {
 
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("premium", data.premium);
-      window.location.href = 'http://localhost:3000/spotify-login'
+      
+      window.location.href = 'https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true';
     } catch (error) {
-      console.log(error)
-    }
-  }
-
-  async function googleLogin(codeResponse) {
-    try {
-      const { data } = await axios.post(
-        `http://localhost:3000/login/google`,
-        null,
-        {
-          headers: {
-            token: codeResponse.credential,
-          },
-        }
-      );
-      localStorage.setItem("access_token", data.access_token);
-      localStorage.setItem("premium", data.premium);
-      await axios.get("http://localhost/spotify-login");
-    } catch (error) {
+      setError("Login failed. Please try again.");
       console.log(error);
     }
   }
-
-  function emailOnChange(event) {
-    setEmail(event.target.value);
-  }
-
-  function passwordOnChange(event) {
-    setPassword(event.target.value);
-  }
-
-  useEffect(() => {
-    openSpotifyLogin()
-  }, [])
 
   return (
     <>
@@ -98,7 +49,8 @@ export default function LoginPage() {
               <input
                 type="text"
                 className="w-full input input-bordered input-accent"
-                onChange={emailOnChange}
+                onChange={e => setEmail(e.target.value)}
+                value={email}
               />
             </div>
             <div>
@@ -110,9 +62,11 @@ export default function LoginPage() {
               <input
                 type="password"
                 className="w-full input input-bordered input-accent"
-                onChange={passwordOnChange}
+                onChange={e => setPassword(e.target.value)}
+                value={password}
               />
             </div>
+            {error && <p className="text-red-500">{error}</p>}
             <div>
               <button type="submit" className="btn btn-accent w-full">
                 Log In
@@ -127,7 +81,6 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <Sidebar />
     </>
   );
 }

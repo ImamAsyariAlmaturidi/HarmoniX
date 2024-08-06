@@ -10,7 +10,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 export default function Carousel() {
   return (
-    <>
+    <div className='px-4 py-9'>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -35,6 +35,6 @@ export default function Carousel() {
             <h1 className='text-white mt-11'>THE WEEKND</h1>
         </SwiperSlide>
       </Swiper>
-    </>
+    </div>
   );
 }
