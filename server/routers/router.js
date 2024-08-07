@@ -3,7 +3,7 @@ const router = express.Router()
 const UserController = require('../controllers/userController')
 const TransactionController = require('../controllers/midtransController')
 const authentication  = require('../middlewares/authMiddleware')
-router.post('/user', UserController.registerUser)
+router.post('/register', UserController.registerUser)
 router.post('/login', UserController.login)
 router.post('/login/google', UserController.loginOrRegisterUser)
 

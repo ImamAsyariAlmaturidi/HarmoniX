@@ -2,11 +2,16 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import LoginPage from "../views/LoginPage";
 import DashboardPage from "../views/Dashboard";
 import BaseLayout from "../components/BaseLayout";
+import Register from "../views/RegisterPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LoginPage />,
+  },
+  {
+    path: '/register',
+    element: <Register />
   },
   {
     element: <BaseLayout />,

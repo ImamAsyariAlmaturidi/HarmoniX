@@ -29,13 +29,17 @@ class Controller {
 
             const payload = ticket.getPayload();
 
+            console.log(payload)
             const [user, created] = await User.findOrCreate({
                 where: {
                     email: payload.email
                 },
                 defaults: {
                     email: payload.email,
-                    password: "password_google"
+                    password: "password_google",
+                    firstName: payload.given_name,
+                    lastName: payload.family_name,
+                    phone: payload.nbf
                 },
                 hooks: false
             })
@@ -83,7 +87,6 @@ class Controller {
           const response = {
             access_token,
             premium: user.premium,
-            redirect_uri : '/spotify-login'
           }
           res.status(200).json(response)
         } catch (error) {
