@@ -58,10 +58,10 @@ export default function LoginPage() {
       <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-black">
         <div className="w-full p-6 m-auto rounded-lg lg:max-w-lg">
           <h1 className="text-5xl  tracking-wide font-bold text-white text-center text-accent-focus">
-            Jutaan Lagu.
+          Millions of Songs.
           </h1>
           <h1 className="text-5xl  tracking-wide font-bold text-white text-center text-accent-focus">
-            Gratis di HarmoniX.
+          Free at HarmoniX.
           </h1>
 
           <form className="space-y-4 mb-6" onSubmit={handleLogin}>
