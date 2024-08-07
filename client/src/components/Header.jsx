@@ -3,9 +3,9 @@ import React from 'react'
 const Header = ({name, image}) => {
     console.log(name, image)
   return (
-    <div className='flex justify-between bg-slate-500'>
+    <div className='flex justify-between'>
         {name}
-        <img src={image} alt="" />
+        <img className='rounded-full w-32' src={image} alt="" />
     </div>
   )
 }
