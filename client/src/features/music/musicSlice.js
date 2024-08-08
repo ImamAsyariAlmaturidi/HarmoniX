@@ -41,8 +41,8 @@ export const fetchAsync = () => async (dispatch) => {
                 headers: { Authorization: `Bearer ${localStorage.spotify_token}` },
             }
         );
-
-        dispatch(fetchSuccess(data))
+        
+        dispatch(fetchSuccess(data.tracks))
     } catch (error) {
         dispatch(fetchReject(error.message))
     }

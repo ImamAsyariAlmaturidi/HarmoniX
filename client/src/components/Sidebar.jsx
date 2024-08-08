@@ -1,26 +1,19 @@
 import Swal from "sweetalert2";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { IoHomeOutline } from "react-icons/io5";
-import { FiSearch } from "react-icons/fi";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { CiLogout } from "react-icons/ci";
+import { Typewriter } from 'react-simple-typewriter';
 
+const Sidebar = ({ article }) => {
 
-const Sidebar = () => {
-    const [ premium, setPremium ] = useState(localStorage.premium)
-    const navigate = useNavigate()
+  const [premium, setPremium] = useState(localStorage.premium);
+  const navigate = useNavigate();
   const config = {
     headers: {
       Authorization: `Bearer ${localStorage.access_token}`,
     },
   };
-
-  function logout() {
-    localStorage.clear()
-    navigate('/')
-  }
 
   async function handleBuy() {
     try {
@@ -41,12 +34,12 @@ const Sidebar = () => {
           localStorage.removeItem("premium");
           localStorage.setItem("premium", true);
 
-          setPremium(localStorage.premium)
+          setPremium(localStorage.premium);
         },
         onPending: function () {
           Swal.fire({
             icon: "warning",
-            title: "Waiting your payment!",
+            title: "Waiting for your payment!",
           });
         },
         onError: function () {
@@ -72,79 +65,51 @@ const Sidebar = () => {
 
   useEffect(() => {
 
-  }, [premium])
+  }, [premium, article]);
 
   return (
     <div>
       <aside
         id="cta-button-sidebar"
-        className="fixed top-0 left-0 z-40 w-96 transition-transform -translate-x-full sm:translate-x-0"
+        className="fixed top-1 h-[96vh] left-0 z-40 w-96 transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-500 dark:bg-neutral-900 rounded-xl  mt-4 ml-5">
-          <ul className="space-y-2 font-medium">
-            <li className="hover:font-bold transition-all">
-              <a
-                href="#"
-                className="flex items-center p-4 text-gray-900 rounded-lg dark:text-white group"
-              >
-                <IoHomeOutline className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                <span className="cursor-pointer flex-1 ms-3 whitespace-nowrap">
-                  Home
-                </span>
-              </a>
-            </li>
-            <li className="hover:font-bold transition-all">
-              <a
-                href="#"
-                className="flex items-center p-4 text-gray-900 rounded-lg dark:text-white group"
-              >
-                <FiSearch className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                <span className="cursor-pointer flex-1 ms-3 whitespace-nowrap">
-                  Search
-                </span>
-              </a>
-            </li>
-            <li className="hover:font-bold transition-all">
-              <a
-                href="#"
-                className="flex items-center p-4 text-gray-900 rounded-lg dark:text-white group"
-              >
-                <CiLogout className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-                <span onClick={() => logout()} className="cursor-pointer flex-1 ms-3 whitespace-nowrap">
-                 Logout 
-                </span>
-              </a>
-            </li>
-          </ul>
 
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-500 dark:bg-neutral-900 rounded-xl mt-4 ml-5">
           {premium === "false" && (
-            <>
-              <div
-                id="dropdown-cta"
-                onClick={handleBuy}
-                className="p-4 mt-4 rounded-lg bg-blue-50 dark:bg-neutral-800 cursor-pointer"
-              >
-                <button></button>
-                <div className="flex items-center mb-3 cursor-pointer">
-                  <span className="bg-neutral-700 flex text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-white justify-between dark:text-black">
-                    <MdOutlineWorkspacePremium className="text-lg" />
-                    Explore Premium
-                  </span>
-                </div>
-                <p className="mb-3 text-sm text-blue-800 dark:text-white">
-                  Unlock the Full Music Experience! Upgrade to our Premium Plan
-                  and dive into a world of unlimited music. For just
-                  $9.99/month, enjoy exclusive benefits that will elevate your
-                  listening experience.
-                </p>
+            <div
+              id="dropdown-cta"
+              onClick={handleBuy}
+              className="p-4 mt-4 rounded-lg bg-blue-50 dark:bg-neutral-800 cursor-pointer"
+            >
+              <div className="flex items-center mb-3 cursor-pointer">
+                <span className="bg-neutral-700 flex text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-white justify-between dark:text-black">
+                  <MdOutlineWorkspacePremium className="text-lg" />
+                  Explore Premium
+                </span>
               </div>
-            </>
+              <p className="mb-3 text-sm text-blue-800 dark:text-white">
+                Unlock the Full Music Experience! Upgrade to our Premium Plan
+                and dive into a world of unlimited music. For just
+                $9.99/month, enjoy exclusive benefits that will elevate your
+                listening experience.
+              </p>
+            </div>
           )}
-        </div>
-
-        <div className="h-[43vh] mt-4 ml-5 px-3 py-4 overflow-y-auto bg-gray-500 dark:bg-neutral-900 rounded-xl">
-
+          <h5 className="text-3xl my-6 text-white tracking-widest text-center">Music History</h5>
+          <div className="text-sm text-center p-10">
+          <Typewriter
+              key={article}
+              text={article}
+              words={[article]}
+              cursor
+              cursorStyle='_'
+              typeSpeed={20}
+              deleteSpeed={30}
+              delaySpeed={1000}
+              loop={false}
+            />
+          </div>
         </div>
       </aside>
     </div>

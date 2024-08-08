@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAsync } from "../features/music/musicSlice";
 import Header from "../components/Header";
 import Main from "../components/Main";
 
@@ -23,13 +21,11 @@ export default function DashboardPage() {
       }
     }
   };
-
-    const { music, loading, error } = useSelector((state) => state.music);
-    const dispatch = useDispatch();
-  const fetchSpotifyData = async (token) => {
+   
+  const fetchSpotifyData = async () => {
     try {
       const { data } = await axios.get("https://api.spotify.com/v1/me", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${localStorage.spotify_token}` },
       });
       setSpotifyData(data);
     } catch (error) {
@@ -43,24 +39,21 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("spotify_token");
-    if (!token) {
+    if (!localStorage.spotify_token) {
       handleSpotifyToken();
     } else {
-      dispatch(fetchAsync())
-      fetchSpotifyData(token);
+      fetchSpotifyData();
     }
   }, []);
 
 
   return (
     <div className="relative flex flex-col h-screen ml-96">
-      <Sidebar />
-      <div className="flex-1 p-6 mx-auto max-w-4xl">
+      <div className="flex-1 w-full p-6 mx-auto max-w-4xl">
         {spotifyData ? (
           <>
             <Header name={spotifyData.display_name} image={spotifyData.images[1]?.url} />
-            <Main music={music}/>
+            <Main />
           </>
         ) : (
           <p className="text-white">Loading Spotify data...</p>

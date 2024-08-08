@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <DashboardPage />,
         loader: () => {
-            if(!localStorage.access_token && !localStorage.spotify_token && !localStorage.premium){
+            if((!localStorage.access_token && !localStorage.spotify_token ) && !localStorage.premium){
                 return redirect('/')
             }
             return null
