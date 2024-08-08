@@ -1,11 +1,9 @@
 import React from 'react'
 
-const Header = ({name, image}) => {
-    console.log(name, image)
+const Header = ({ name}) => {
   return (
-    <div className='flex justify-between'>
-        {name}
-        <img className='rounded-full w-32' src={image} alt="" />
+    <div className='flex justify-between '>
+      {name}
     </div>
   )
 }

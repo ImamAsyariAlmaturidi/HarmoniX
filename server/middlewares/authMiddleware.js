@@ -3,15 +3,12 @@ const { User } = require("../models/index");
 
 const authentication = async (req, res, next) => {
   const accessToken = req.headers.authorization?.split(" ")[1]
-  console.log(accessToken)
-
   try {
     if (!accessToken) {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    const {UserId, email, premium} = verifyToken(accessToken);
-    console.log(UserId, 'hhh')
+    const { UserId, email, premium } = verifyToken(accessToken);
 
     const user = await User.findByPk(UserId);
 
@@ -32,4 +29,6 @@ const authentication = async (req, res, next) => {
   }
 };
 
-module.exports = authentication;
+
+module.exports = authentication
+

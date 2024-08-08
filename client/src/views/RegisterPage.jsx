@@ -25,7 +25,7 @@ export default function Register() {
             });
             localStorage.setItem("access_token", data.access_token)
             window.location.href =
-                "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
+                "https://accounts.spotify.com/authorize?client_id=f7f51687e7764424a976386bb7224918&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
 
         } catch (error) {
             console.log(error);
@@ -64,7 +64,7 @@ export default function Register() {
             localStorage.setItem("premium", data.premium);
 
             window.location.href =
-                "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
+                "https://accounts.spotify.com/authorize?client_id=f7f51687e7764424a976386bb7224918&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
         } catch (error) {
             setError("Register failed. Please try again.");
             console.log(error);

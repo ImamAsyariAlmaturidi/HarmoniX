@@ -1,15 +1,15 @@
 import Swal from "sweetalert2";
 import axios from "axios";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import Carousel from "./Carousel";
 import { CiLogout } from "react-icons/ci";
 
 
 const Sidebar = () => {
+    const [ premium, setPremium ] = useState(localStorage.premium)
     const navigate = useNavigate()
   const config = {
     headers: {
@@ -40,7 +40,8 @@ const Sidebar = () => {
           });
           localStorage.removeItem("premium");
           localStorage.setItem("premium", true);
-          window.location.reload();
+
+          setPremium(localStorage.premium)
         },
         onPending: function () {
           Swal.fire({
@@ -68,6 +69,10 @@ const Sidebar = () => {
       });
     }
   }
+
+  useEffect(() => {
+
+  }, [premium])
 
   return (
     <div>
@@ -113,14 +118,14 @@ const Sidebar = () => {
             </li>
           </ul>
 
-          {localStorage.premium === "false" && (
+          {premium === "false" && (
             <>
               <div
                 id="dropdown-cta"
                 onClick={handleBuy}
-                className="p-4 mt-6 rounded-lg bg-blue-50 dark:bg-neutral-800 cursor-pointer"
-                role="alert"
+                className="p-4 mt-4 rounded-lg bg-blue-50 dark:bg-neutral-800 cursor-pointer"
               >
+                <button></button>
                 <div className="flex items-center mb-3 cursor-pointer">
                   <span className="bg-neutral-700 flex text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded dark:bg-white justify-between dark:text-black">
                     <MdOutlineWorkspacePremium className="text-lg" />
@@ -138,8 +143,8 @@ const Sidebar = () => {
           )}
         </div>
 
-        <div className="h-screen mt-4 ml-5 px-3 py-4 overflow-y-auto bg-gray-500 dark:bg-neutral-900 rounded-xl">
-         <Carousel />
+        <div className="h-[43vh] mt-4 ml-5 px-3 py-4 overflow-y-auto bg-gray-500 dark:bg-neutral-900 rounded-xl">
+
         </div>
       </aside>
     </div>
