@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { IoHomeOutline } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 import { CiLogout } from "react-icons/ci";
+import Following from './Following';
 
-const Header = ({ name, image}) => {
-  console.log(image)
+const Header = ({ name, image }) => {
   function logout() {
     localStorage.clear()
     navigate('/')
@@ -13,12 +13,13 @@ const Header = ({ name, image}) => {
   return (
     <div className='flex justify-between items-center p-4 w-full'>
       <div className='font-bold text-white font-mono'>
-        
-        {name}
-        <img src={image} alt="" />
+        <div className='flex'>
+          {name}
+          <img className='flex rounded-full ml-7' width={30} src={image} alt="" />
         </div>
-      
+      </div>
       <div className='flex space-x-4'>
+
         <a
           href="#"
           className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white group hover:font-bold transition-all"
@@ -28,7 +29,7 @@ const Header = ({ name, image}) => {
             Home
           </span>
         </a>
-        
+
         <a
           href="#"
           className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white group hover:font-bold transition-all"
@@ -38,7 +39,7 @@ const Header = ({ name, image}) => {
             Search
           </span>
         </a>
-        
+
         <a
           href="#"
           className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white group hover:font-bold transition-all"

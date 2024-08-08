@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Main from "../components/Main";
 
 export default function DashboardPage() {
   const [spotifyData, setSpotifyData] = useState(null);
+
   const navigate = useNavigate();
 
   const handleSpotifyToken = () => {
@@ -22,6 +22,8 @@ export default function DashboardPage() {
     }
   };
    
+
+
   const fetchSpotifyData = async () => {
     try {
       const { data } = await axios.get("https://api.spotify.com/v1/me", {

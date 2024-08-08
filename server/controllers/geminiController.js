@@ -1,21 +1,26 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");;
+const Groq = require('groq-sdk');
+
 class Controller {
     static async prompting(req, res) {
-        const {title, singer} = req.body
+        const { title, singer } = req.body;
         try {
-            console.log(singer)
-            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" })
-            const prompt = `please give me histories this singer ${singer}, and without symbol special character, without bold text or ** charather symbol`
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
+            const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+            const response = await groq.chat.completions.create({
+                messages: [
+                    {
+                        role: "user",
+                        // content : `please give me full lyric from music ${title} - ${singer}, and just give me lyrick without explain verse or chours`
+                        content: `please give me histories this singer ${singer}, and this music name ${title} and without symbol special character, without bold text or ** charather symbol`
+                    },
+                ],
+                model: "llama3-8b-8192",
+            });
+            const text = response.choices[0]?.message?.content || ''
             res.status(200).json({
                 text
-            })
+            });
         } catch (error) {
-            console.log(error)
+            console.error('Error creating chat completion:', error);
         }
     }
 }

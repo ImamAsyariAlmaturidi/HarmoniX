@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Typewriter } from 'react-simple-typewriter';
-
+import Following from "./Following";
 const Sidebar = ({ article }) => {
 
   const [premium, setPremium] = useState(localStorage.premium);
@@ -75,7 +75,14 @@ const Sidebar = ({ article }) => {
         aria-label="Sidebar"
       >
 
+
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-500 dark:bg-neutral-900 rounded-xl mt-4 ml-5">
+          <div className="text-center font-mono font-bold text-white">
+            Your Library
+            <div className="ml-5">
+              <Following />
+            </div>
+          </div>
           {premium === "false" && (
             <div
               id="dropdown-cta"
@@ -96,16 +103,16 @@ const Sidebar = ({ article }) => {
               </p>
             </div>
           )}
-          <h5 className="text-3xl my-6 text-white tracking-widest text-center">Music History</h5>
+          <h5 className="text-3xl my-6 text-white tracking-widest text-center">Artis History</h5>
           <div className="text-sm text-center p-10">
-          <Typewriter
+            <Typewriter
               key={article}
               text={article}
               words={[article]}
               cursor
               cursorStyle='_'
               typeSpeed={20}
-              deleteSpeed={30}
+              deleteSpeed={500} 
               delaySpeed={1000}
               loop={false}
             />
