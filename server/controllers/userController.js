@@ -1,28 +1,46 @@
-const { User } = require('../models/index')
+const { User } = require('../models/index');
 const { signToken } = require("../helpers/jwt");
 const { comparePassword } = require("../helpers/bcrypt");
 const { OAuth2Client } = require('google-auth-library');
+
 class Controller {
-  static async registerUser(req, res) {
-    const { firstName, lastName, phone, email, password } = req.body
+  static async registerUser(req, res, next) {
+    const { firstName, lastName, phone, email, password } = req.body;
+
     try {
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Email is already registered' });
+      }
+
+ 
       await User.create({
-        firstName, lastName, phone, email, password
-      })
+        firstName,
+        lastName,
+        phone,
+        email,
+        password
+      });
+
       res.status(201).json({
-        msg: 'create user success',
-      })
+        msg: 'User created successfully',
+      });
     } catch (error) {
-      res.send(error)
+     
+      console.error('Error during registration:', error);
+      next(error);
     }
   }
 
-  static async loginOrRegisterUser(req, res) {
+  static async loginOrRegisterUser(req, res, next) {
     try {
-      const UserId = req.loginInfo
-      const { token } = req.headers
-      const client = new OAuth2Client();
+      const token = req.headers.token;
 
+      if (!token) {
+        return res.status(400).json({ message: 'Token is required' });
+      }
+
+      const client = new OAuth2Client();
       const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.GOOGLE_CLIENT_ID,
@@ -30,51 +48,51 @@ class Controller {
 
       const payload = ticket.getPayload();
       const [user, created] = await User.findOrCreate({
-        where: {
-          email: payload.email
-        },
+        where: { email: payload.email },
         defaults: {
           email: payload.email,
           password: "password_google",
           firstName: payload.given_name,
           lastName: payload.family_name,
-          phone: payload.nbf
+          phone: payload.phone_number || 'N/A',
         },
         hooks: false
-      })
-
-
-      const Users = await User.findOne({
-        where: {
-          email: payload.email
-        }
-      })
+      });
 
       const access_token = signToken({
-        UserId: Users.id, email: Users.email, premium: Users.premium
-      })
+        UserId: user.id,
+        email: user.email,
+        premium: user.premium
+      });
 
-      res.status(200).json({ access_token, premium: Users.premium })
-    } catch (err) {
-      console.log(err)
+      res.status(200).json({ access_token, premium: user.premium });
+    } catch (error) {
+
+      if (error.response && error.response.error) {
+   
+        next({ status: 400, message: 'Invalid Google token' });
+      } else {
+    
+        next(error);
+      }
     }
   }
 
-  static async login(req, res) {
+  static async login(req, res, next) {
     const { email, password } = req.body;
-    try {
-      const user = await User.findOne({
-        where: {
-          email,
-        },
-      });
 
+    try {
+      if (!email || !password) {
+        throw { name: "InvalidLogin" };
+      }
+
+      const user = await User.findOne({ where: { email } });
       if (!user) {
-        throw { "name": "user not found" };
+        throw { name: "LoginError" };
       }
 
       if (!comparePassword(password, user.password)) {
-        throw { "name": "invalid email or password" };
+        throw { name: "LoginError" };
       }
 
       const payload = {
@@ -82,17 +100,17 @@ class Controller {
         email: user.email,
         premium: user.premium,
       };
-      const access_token = signToken(payload)
+      const access_token = signToken(payload);
       const response = {
         access_token,
         premium: user.premium,
-      }
-      res.status(200).json(response)
-    } catch (error) {
-      console.log(error)
+      };
 
+      res.status(200).json(response);
+    } catch (error) {
+      next(error);
     }
   }
 }
 
-module.exports = Controller
+module.exports = Controller;

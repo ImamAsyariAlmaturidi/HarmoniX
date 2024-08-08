@@ -24,7 +24,6 @@ export default function LoginPage() {
         "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
 
     } catch (error) {
-      console.log(error);
       Swal.fire({
         icon: "error",
         title: error.response.data.message,
@@ -48,8 +47,10 @@ export default function LoginPage() {
       window.location.href =
         "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
     } catch (error) {
-      setError("Login failed. Please try again.");
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: error.response.data.message,
+    });
     }
   }
 

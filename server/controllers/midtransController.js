@@ -3,8 +3,9 @@ const axios = require("axios");
 const { generateUniqueOrderId } = require("../helpers/timestamp");
 const { User, Transaction } = require("../models");
 class Controller {
-  static async createTransaction(req, res) {
+  static async createTransaction(req, res, next) {
     try {
+      const { UserId } = req.loginInfo
       const snap = new midtransClient.Snap({
         isProduction: false,
         serverKey: process.env.SERVER_KEY_MIDTRANS,
@@ -12,9 +13,13 @@ class Controller {
 
       const user = await User.findOne({
         where: {
-          id: 1,
+          id: UserId,
         },
       });
+
+      if (!user) {
+        throw { name: "NotFound" }
+      }
 
       const order_id = generateUniqueOrderId();
 
@@ -23,6 +28,10 @@ class Controller {
         order_id,
         gross_amount: 52000,
       });
+
+      if (!transaction) {
+        throw { name: "NotFound" }
+      }
 
       const parameter = {
         transaction_details: {
@@ -42,12 +51,16 @@ class Controller {
 
       const { token } = await snap.createTransaction(parameter);
 
+      if (!token) {
+        throw { name: "InvalidInput" }
+      }
+
       res.status(201).json({
         token,
         order_id,
       });
     } catch (error) {
-      console.log(error);
+      next(error)
     }
   }
 
@@ -88,7 +101,7 @@ class Controller {
         transaction_token: token,
       }, {
         where: {
-            order_id
+          order_id
         }
       });
 
@@ -106,8 +119,8 @@ class Controller {
       res.status(200).json({
         message: "Payment success!",
       });
-    } catch (err) {
-      console.log(err, "bad request");
+    } catch (error) {
+      next(error)
     }
   }
 }

@@ -94,8 +94,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  User.beforeCreate(async(instance, options) => {
-    instance.password = await hashPassword(instance.password);
+  User.beforeCreate((instance, options) => {
+    instance.password = hashPassword(instance.password);
     instance.premium = false;
   });
   return User;

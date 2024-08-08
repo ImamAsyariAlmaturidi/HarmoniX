@@ -16,6 +16,8 @@ app.use(cookieParser())
 
 app.use(router)
 
-app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Listening at http://localhost:${port}`);
+// });
+
+module.exports = app

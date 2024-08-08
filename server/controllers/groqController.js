@@ -20,7 +20,7 @@ class Controller {
                 text
             });
         } catch (error) {
-            console.error('Error creating chat completion:', error);
+            console.log('Error creating chat completion:', error);
         }
     }
 }
