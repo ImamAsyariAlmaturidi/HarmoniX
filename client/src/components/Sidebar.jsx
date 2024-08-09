@@ -17,12 +17,12 @@ const Sidebar = ({ article }) => {
 
   async function handleBuy() {
     try {
-      const { data } = await axios.get(`http://localhost:3000/subs`, config);
+      const { data } = await axios.get(`http://54.253.134.153/subs`, config);
 
       window.snap.pay(data.token, {
         onSuccess: async function () {
           const response = await axios.patch(
-            `http://localhost:3000/subs/update`,
+            `http://54.253.134.153/subs/update`,
             { order_id: data.order_id, token: data.token },
             config
           );

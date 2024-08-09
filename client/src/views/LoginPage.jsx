@@ -13,7 +13,7 @@ export default function LoginPage() {
   async function googleLogin(codeResponse) {
     try {
       const { data } = await axios.post(
-        `http://localhost:3000/login/google`, null, {
+        `http://54.253.134.153/login/google`, null, {
         headers: {
           token: codeResponse.credential
         }
@@ -21,7 +21,7 @@ export default function LoginPage() {
       localStorage.setItem("access_token", data.access_token)
       localStorage.setItem("premium", data.premium)
       window.location.href =
-        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
+        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=https://harmoni-x-weld.vercel.app/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
 
     } catch (error) {
       Swal.fire({
@@ -37,7 +37,7 @@ export default function LoginPage() {
     try {
       const addedData = { email, password };
       const { data } = await axios.post(
-        `http://localhost:3000/login/`,
+        `http://54.253.134.153/login/`,
         addedData
       );
 
@@ -45,7 +45,7 @@ export default function LoginPage() {
       localStorage.setItem("premium", data.premium);
 
       window.location.href =
-        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
+        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=https://harmoni-x-weld.vercel.app/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
     } catch (error) {
       Swal.fire({
         icon: "error",
