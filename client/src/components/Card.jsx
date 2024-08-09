@@ -19,7 +19,6 @@ const Card = ({ data, setArticle }) => {
       const body = {
         title: data.name, singer: data.artists[0].name
       }
-      console.log(data.name)
       const response = await axios.post('http://localhost:3000/music', body)
       setArticle(response.data.text)
     } catch (error) {

@@ -6,6 +6,8 @@ const { hashPassword } = require("../helpers/bcrypt");
 const { signToken } = require('../helpers/jwt');
 const { OAuth2Client } = require('google-auth-library');
 
+let access_token;
+
 beforeAll(async () => {
 
     for (const el of users) {
@@ -17,13 +19,12 @@ beforeAll(async () => {
 
     await sequelize.queryInterface.bulkInsert("Users", users, {});
 
-
     const payload = {
-        username: "imam",
+        UserId: 1,
         email: "imam@gmail.com",
-        role: "Admin"
-    };
-
+        premium: true
+      };
+      
     global.access_token = signToken(payload);
 });
 

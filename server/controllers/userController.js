@@ -65,6 +65,8 @@ class Controller {
         premium: user.premium
       });
 
+      console.log(token)
+
       res.status(200).json({ access_token, premium: user.premium });
     } catch (error) {
 

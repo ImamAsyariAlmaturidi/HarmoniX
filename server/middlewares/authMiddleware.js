@@ -24,7 +24,7 @@ const authentication = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error(error);
+    console.log(error, "ini error di authMiddleware");
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
