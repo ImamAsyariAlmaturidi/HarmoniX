@@ -17,12 +17,12 @@ const Sidebar = ({ article }) => {
 
   async function handleBuy() {
     try {
-      const { data } = await axios.get(`http://54.253.134.153/subs`, config);
+      const { data } = await axios.get(`https://server.imam-asyari.online/subs`, config);
 
       window.snap.pay(data.token, {
         onSuccess: async function () {
           const response = await axios.patch(
-            `http://54.253.134.153/subs/update`,
+            `https://server.imam-asyari.online/subs/update`,
             { order_id: data.order_id, token: data.token },
             config
           );

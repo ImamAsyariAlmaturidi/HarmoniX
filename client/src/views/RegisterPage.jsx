@@ -18,7 +18,7 @@ export default function Register() {
         try {
             console.log(codeResponse);
             const { data } = await axios.post(
-                `http://54.253.134.153/login/google`, null, {
+                `https://server.imam-asyari.online/login/google`, null, {
                 headers: {
                     token: codeResponse.credential
                 }
@@ -42,14 +42,14 @@ export default function Register() {
             const addedData = { email, password, phone,lastName, firstName };
 
             const response =  await axios.post(
-                `http://54.253.134.153/register/`,
+                `https://server.imam-asyari.online/register/`,
                 addedData
             );
 
             console.log(response)
 
             const { data } =  await axios.post(
-                `http://54.253.134.153/login/`,
+                `https://server.imam-asyari.online/login/`,
                 {
                     email, password
                 }

@@ -13,7 +13,7 @@ export default function LoginPage() {
   async function googleLogin(codeResponse) {
     try {
       const { data } = await axios.post(
-        `http://54.253.134.153/login/google`, null, {
+        `https://server.imam-asyari.online/login/google`, null, {
         headers: {
           token: codeResponse.credential
         }
@@ -37,7 +37,7 @@ export default function LoginPage() {
     try {
       const addedData = { email, password };
       const { data } = await axios.post(
-        `http://54.253.134.153/login/`,
+        `https://server.imam-asyari.online/login/`,
         addedData
       );
 
