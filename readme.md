@@ -1,43 +1,37 @@
-Register User
+# Web Project Overview
 
-Endpoint: /register Method: POST Description: Registers a new user. Request Body:
+## Login Page
+![Login Page](https://github.com/user-attachments/assets/de27c051-a495-4f52-8768-e202099ffa28)
 
-JSON { "fullName": "John Doe", "lastName": "Doe", "phone": "+1234567890", "email": "johndoe@example.com", "password": "password123" } Use code with caution. fullName (string, required): The full name of the user. lastName (string, required): The last name of the user. phone (string, required): The phone number of the user. email (string, required): The email address of the user. password (string, required): The password for the user account. Responses:
+The **Login Page** allows users to access their accounts. Key features include:
 
-201 Created: User successfully registered.   400 Bad Request: Invalid request parameters. 500 Internal Server Error: Server error. Login
+- **Email and Password Fields**: A straightforward form for entering login credentials.
+- **Login Button**: Authenticates the user's credentials and grants access to their account.
+- **Registration Link**: Provides a link to the registration page for new users.
 
-Endpoint: /login Method: POST Description: Logs in a user. Request Body:
+## Registration Page
+![Registration Page](https://github.com/user-attachments/assets/ed95f285-bd6e-4c76-a3a9-3c260e5e2e51)
 
-JSON { "email": "johndoe@example.com", "password": "password123" } Use code with caution. email (string, required): The email address of the user. password (string, required): The password for the user account. Responses:
+The **Registration Page** facilitates the creation of new user accounts. Key features include:
 
-200 OK: User successfully logged in. Returns user details and authentication token.   401 Unauthorized: Invalid email or password. 500 Internal Server Error: Server error. Login with Google OAuth
+- **Registration Form**: Includes fields for the user’s name, email, and password.
+- **Sign Up Button**: Submits the registration form to create a new account.
+- **Login Link**: Directs users to the login page if they already have an account.
 
-Endpoint: /login/google Method: POST Description: Logs in or registers a user with Google OAuth. Request Body:
+## Home Page
+![Home Page](https://github.com/user-attachments/assets/9e72a611-e9bd-464f-ae47-d0179c39f8be)
 
-JSON { "idToken": "YOUR_GOOGLE_ID_TOKEN" } Use code with caution. idToken (string, required): The Google OAuth ID token. Responses:
+The **Home Page** serves as the main dashboard of the application. Key features include:
 
-200 OK: User successfully logged in or registered. Returns user details and authentication token. 401 Unauthorized: Invalid token or user registration failed. 500 Internal Server Error: Server error. Music
+- **Overview Display**: Provides an overview of the application’s features and main content.
+- **Navigation Menu**: Access to different sections and features of the application.
 
-Get Music Information
+## Technologies Used
 
-Endpoint: /music Method: POST Description: Retrieves information about a music track. Request Body:
+- **ExpressJS**: Backend framework used for building the server and API.
+- **ReactJS**: Frontend library utilized for creating interactive user interfaces.
+- **Spotify API**: Integrated to access and manage music data from Spotify.
+- **Midtrans Payment Gateway**: Facilitates online payment processing.
+- **Groq AI**: Used to generate singer history from Spotify API data.
+- **Google OAuth**: Enables user authentication through Google accounts.
 
-JSON { "title": "Bohemian Rhapsody", "singer": "Queen" } Use code with caution. title (string, required): The title of the music track. singer (string, required): The name of the singer. Responses:
-
-200 OK: Returns information about the music track. 400 Bad Request: Invalid request parameters. 500 Internal Server Error: Server error. Subscription
-
-Create Transaction
-
-Endpoint: /subs Method: GET Description: Creates a new transaction. Request Parameters:
-
-No request parameters required. Responses:
-
-200 OK: Transaction created successfully. 400 Bad Request: Invalid request parameters. 500 Internal Server Error: Server error. Update Transaction Status
-
-Endpoint: /subs/update Method: PATCH Description: Updates the status of a transaction. Request Body:
-
-JSON { "transactionId": "12345", "status": "completed" } Use code with caution. transactionId (string, required): The ID of the transaction to update. status (string, required): The new status of the transaction. Responses:
-
-200 OK: Transaction status updated successfully. 400 Bad Request: Invalid request parameters. 500 Internal Server Error: Server error. Error Handling
-
-All endpoints use the errorHandler middleware to handle any errors that occur during processing. Ensure that your error responses are consistent with the expected format.
