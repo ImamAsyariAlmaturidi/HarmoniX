@@ -19,6 +19,7 @@ class Controller {
       res.status(200).json({
         text,
       });
+      console.log(text);
     } catch (error) {
       console.log(error);
     }

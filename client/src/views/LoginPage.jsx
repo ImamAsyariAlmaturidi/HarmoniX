@@ -13,16 +13,18 @@ export default function LoginPage() {
   async function googleLogin(codeResponse) {
     try {
       const { data } = await axios.post(
-        `https://server.imam-asyari.online/login/google`, null, {
-        headers: {
-          token: codeResponse.credential
+        `http://localhost:3000/login/google`,
+        null,
+        {
+          headers: {
+            token: codeResponse.credential,
+          },
         }
-      });
-      localStorage.setItem("access_token", data.access_token)
-      localStorage.setItem("premium", data.premium)
+      );
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("premium", data.premium);
       window.location.href =
-        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=https://harmoni-x-weld.vercel.app/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
-
+        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -31,13 +33,12 @@ export default function LoginPage() {
     }
   }
 
-
   async function handleLogin(e) {
     e.preventDefault();
     try {
       const addedData = { email, password };
       const { data } = await axios.post(
-        `https://server.imam-asyari.online/login/`,
+        `http://localhost:3000/login/`,
         addedData
       );
 
@@ -45,12 +46,12 @@ export default function LoginPage() {
       localStorage.setItem("premium", data.premium);
 
       window.location.href =
-        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=https://harmoni-x-weld.vercel.app/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
+        "https://accounts.spotify.com/authorize?client_id=0cdf0fe63eaa4e9ba6294a79f2019325&redirect_uri=http://localhost:5173/dashboard&scope=user-read-playback-state user-follow-modify user-modify-playback-state app-remote-control streaming user-follow-read user-top-read user-read-email user-read-private&response_type=token&show_dialog=true";
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: error.response.data.message,
-    });
+      });
     }
   }
 
@@ -59,10 +60,10 @@ export default function LoginPage() {
       <div className="relative flex flex-col justify-center h-screen overflow-hidden bg-black">
         <div className="w-full p-6 m-auto rounded-lg lg:max-w-lg">
           <h1 className="text-5xl  tracking-wide font-bold text-white text-center text-accent-focus">
-          Millions of Songs.
+            Millions of Songs.
           </h1>
           <h1 className="text-5xl  tracking-wide font-bold text-white text-center text-accent-focus">
-          Free at HarmoniX.
+            Free at HarmoniX.
           </h1>
 
           <form className="space-y-4 mb-6" onSubmit={handleLogin}>
@@ -105,14 +106,27 @@ export default function LoginPage() {
               <div className="my-6">
                 <GoogleLogin onSuccess={googleLogin} />
               </div>
-              <Link to="/register" className="text-center btn hover:btn-accent hover:text-white bg-white font-bold text-black">
+              <Link
+                to="/register"
+                className="text-center btn hover:btn-accent hover:text-white bg-white font-bold text-black"
+              >
                 Crate Account?
               </Link>
             </div>
           </div>
         </div>
-        <div className="text-center text-xs flex justify-around" >
-          <p>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" className="underline">Privacy Policy</a> and <a href="https://policies.google.com/terms" className="underline">Terms of Service</a> apply.</p>
+        <div className="text-center text-xs flex justify-around">
+          <p>
+            This site is protected by reCAPTCHA and the Google{" "}
+            <a href="https://policies.google.com/privacy" className="underline">
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a href="https://policies.google.com/terms" className="underline">
+              Terms of Service
+            </a>{" "}
+            apply.
+          </p>
         </div>
       </div>
     </>
